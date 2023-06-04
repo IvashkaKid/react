@@ -50,7 +50,7 @@ function App() {
             <h2 style={{marginBottom:10, marginTop:0}}>Посты:</h2>
             {posts.map(post => {
               if(post.userId === user.id) 
-              {return <Card type="inner" style={{marginBottom: 15}}><h3 style={{marginBottom: 10, marginTop:0}}>#{x++} {post.title}</h3> <p1>{post.body}</p1> </Card>}
+              {return <Card type="inner" style={{marginBottom: 15}}><h3 style={{marginBottom: 10, marginTop:0}}>#{x++} {post.title}</h3> <p>{post.body}</p> </Card>}
               else{
                 return ''
               }})}
