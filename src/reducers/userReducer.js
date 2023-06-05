@@ -21,7 +21,7 @@ const initialState = {
             // Создаем нового пользователя с уникальным ID
             const newUser = {
               id: state.users.length + 1,
-              name: action.payload.name,
+              name: action.payload.name || action.payload.login,
               ...action.payload,
             };
             return {
