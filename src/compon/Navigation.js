@@ -1,42 +1,28 @@
-import React, { useState } from 'react';
+import React, { } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { loginUser, registerUser, logoutUser } from '../actions/userActions.js';
-import { Menu, Button, Input } from 'antd';
+import {logoutUser } from '../actions/userActions.js';
+import { Menu, Button } from 'antd';
+import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
+import Posts from "./PostPage";
+import Login from "./LoginPage";
+import Registration from "./RegisterPage";
 
 const Navigation = () => {
 const currentUser = useSelector((state) => state.user.currentUser);
 const dispatch = useDispatch();
-const [userData, setUserData] = useState({ login: '', password: '' });
-
-  const handleLogin = () => {
-    if (userData.login && userData.password) {
-      dispatch(loginUser(userData));
-    } else {
-      alert('Введите имя пользователя и пароль зарегистрированного пользователя');
-    }
-  };
-
-  const handleRegister = () => {
-    if (userData.login && userData.password) {
-    dispatch(registerUser({ ...userData, name: userData.username }));
-    }else{
-        alert('Введите логин и пароль нового пользователя');
-    }
-  };
 
   const handleLogout = () => {
     dispatch(logoutUser());
   };
 
-  const handleChange = (e) => {
-    setUserData({ ...userData, [e.target.name]: e.target.value });
-  };
 const users = useSelector((state) => state.user.users);
  console.log(users);
   return (
+    <Router>
     <Menu mode="horizontal">
       {currentUser ? (
         <>
+          <Menu.Item><Link to="/posts">Посты</Link></Menu.Item>
           <Menu.Item>{currentUser.login}</Menu.Item>
           <Menu.Item>
             <Button onClick={handleLogout}>Выход</Button>
@@ -45,36 +31,35 @@ const users = useSelector((state) => state.user.users);
       ) : (
         <>
           <Menu.Item>
-            <Input
-              type="text"
-              name="login"
-              value={userData.login}
-              onChange={handleChange}
-              placeholder="Имя пользователя"
-            />
-          </Menu.Item>
+            <Button type="primary">
+              <Link to="/posts">
+              Посты   
+              </Link>    
+            </Button>
+          </Menu.Item>        
           <Menu.Item>
-            <Input.Password
-              type="password"
-              name="password"
-              value={userData.password}
-              onChange={handleChange}
-              placeholder="Пароль"
-            />
-          </Menu.Item>
-          <Menu.Item>
-            <Button type="primary" onClick={handleLogin}>
-              Вход
+            <Button type="primary" >
+            <Link to="/login">
+              Логин   
+              </Link>  
             </Button>
           </Menu.Item>
           <Menu.Item>
-            <Button type="primary" onClick={handleRegister}>
-              Регистрация
+            <Button type="primary">
+              <Link to="/registration">
+              Регистрация   
+              </Link>    
             </Button>
           </Menu.Item>
         </>
       )}
     </Menu>
+            <Routes>
+          <Route path="/posts" element={<Posts />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/registration" element={<Registration />} />
+        </Routes>
+    </Router>
   );
   
 };

@@ -7,7 +7,7 @@ export const loginUser = (userData) => {
   };
   
   export const registerUser = (userData) => {
-    const user = { login: userData.login, password: userData.password };
+    const user = { login: userData.login, password: userData.password, name: userData.name };
     
     return {
       type: 'REGISTER_USER',
